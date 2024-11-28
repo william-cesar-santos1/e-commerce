@@ -11,7 +11,7 @@ public class OrderPayUseCaseImpl implements IOrderPayUseCase {
     @Override
     public void pay(Order order) {
         if (order.getStatus() != OrderStatus.PENDING_PAYMENT) {
-            throw new RuntimeException("Pedido em estado invalido");
+//            throw new RuntimeException("Pedido em estado invalido");
         }
         order.setStatus(OrderStatus.PAID);
     }
