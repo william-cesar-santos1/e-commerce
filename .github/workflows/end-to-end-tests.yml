@@ -1,0 +1,27 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  docker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Start containers
+        run: docker-compose -f "docker-compose.yml" up -d --build
+
+      - name: Checkout tests
+        uses: actions/checkout@v1
+        repository: git@github.com:william-cesar-santos1/e-commerce-test.git end-to-end-tests
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
